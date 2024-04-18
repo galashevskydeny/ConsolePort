@@ -212,3 +212,12 @@ function lib.HideOverlayGlow(frame)
 		end
 	end
 end
+
+-- Измените ваш аддон, чтобы экспортировать эти функции
+_G.ShowOverlayGlow = function(frame)
+    lib.ShowOverlayGlow(frame)
+end
+
+_G.HideOverlayGlow = function(frame)
+    lib.HideOverlayGlow(frame)
+end
