@@ -178,8 +178,15 @@ local config = {
 	},
 	clickOnDown = true,
 	flyoutDirection = 'UP',
+	hideEmptyButtons = false,
+	hidePageNumber = false,
+	hideMacroName = false,
+	hidePage2 = false,
+	hidePage3 = false,
+	hidePage4 = false,
+	hidePage5 = false,
+	hidePage6 = false,
 }
-
 ---------------------------------------------------------------
 -- Cluster methods
 ---------------------------------------------------------------
@@ -189,14 +196,14 @@ function Cluster:Show()
 	for _, button in pairs(self) do
 		button:Show()
 	end
-	self[nomod].Shadow:Show()
+	--self[nomod].Shadow:Show()
 end
 
 function Cluster:Hide()
 	for _, button in pairs(self) do
 		button:Hide()
 	end
-	self[nomod].Shadow:Hide()
+	--self[nomod].Shadow:Hide()
 end
 
 function Cluster:SetPoint(...)
@@ -368,6 +375,7 @@ local function CreateMainShadowFrame(self)
 end
 
 local function CreateButton(parent, id, name, modifier, size, texSize, config)
+
 	local button = acb:CreateButton(id, name, parent, config)
 
 	button:SetAttribute('ignoregamepadhotkey', true)
@@ -394,13 +402,13 @@ local function CreateButton(parent, id, name, modifier, size, texSize, config)
 		button.isMainButton = true;
 
 		button.Hotkey = CreateMainHotkeyFrame(button, id)
-		button.Shadow = CreateMainShadowFrame(button)
+		--button.Shadow = CreateMainShadowFrame(button)
 		button.Hotkey:OnUpdateHotkeyCallback()
 	else
 		-- Small buttons should have smaller CD font and no drop shadow
 		local file, height, flags = button.cooldown.text:GetFont()
 		button.cooldown.text:SetFont(file, height * 0.75, flags)
-		button:ToggleShadow(false)
+		--button:ToggleShadow(false)
 
 		-- Add modifier icons
 		if hotkeyConfig[modifier] then
@@ -442,11 +450,48 @@ end
 
 function HANDLE:Create(parent, id)
 	local cluster = CPAPI.Proxy({}, Cluster);
+	
+	if env.cfg.hideemptybuttons then
+		config.hideEmptyButtons = env.cfg.hideemptybuttons
+	end
+
+	if env.cfg.hidepagenumber then
+		config.hidePageNumber = env.cfg.hidepagenumber
+	end
+
+	if env.cfg.hidemacroname then
+		config.hideMacroName = env.cfg.hidemacroname
+	end
+
+	if env.cfg.hiddenpage then
+		config.hiddenPage = env.cfg.hiddenpage
+	end
+
+	if env.cfg.hidepage2 then
+		config.hidePage2 = env.cfg.hidepage2
+	end
+
+	if env.cfg.hidepage3 then
+		config.hidePage3 = env.cfg.hidepage3
+	end
+
+	if env.cfg.hidepage4 then
+		config.hidePage4 = env.cfg.hidepage4
+	end
+
+	if env.cfg.hidepage5 then
+		config.hidePage5 = env.cfg.hidepage5
+	end
+
+	if env.cfg.hidepage6 then
+		config.hidePage6 = env.cfg.hidepage6
+	end
 
 	for mod, info in pairs(mods) do
 		local name = ('CPB_%s_%s'):format(id, mod):gsub('-', '_'):gsub('_$', '')
 		local bSize, tSize = unpack(info.size)
-		local button = CreateButton(parent, id..mod, name, mod, bSize, tSize, mod == '' and config)
+
+		local button = CreateButton(parent, id..mod, name, mod, bSize, tSize, config)
 		button.plainID = id
 		button.mod = mod
 		-- dispatch to header
@@ -526,6 +571,7 @@ end
 function HANDLE:RefreshBinding(binding, cluster, button, modifier, main)
 	local actionID = binding and db('Actionbar/Binding/'..binding)
 	local stateType, stateID;
+	
 	if actionID then
 		stateType, stateID = self:SetActionBinding(button, modifier, actionID, main)
 	elseif binding and binding:len() > 0 then
@@ -541,6 +587,8 @@ function HANDLE:RefreshBinding(binding, cluster, button, modifier, main)
 		self:RunAttribute('UpdateState', '%s')
 		self:CallMethod('UpdateAction')
 	]], modifier))
+
+	
 end
 
 function HANDLE:UpdateClusterBindings(cluster, bindings)

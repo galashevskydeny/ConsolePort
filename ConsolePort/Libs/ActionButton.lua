@@ -98,6 +98,14 @@ local DefaultConfig = {
 	keyBoundTarget = false,
 	clickOnDown = false,
 	flyoutDirection = 'UP',
+	hideEmptyButtons = false,
+	hidePageNumber = false,
+	hideMacroName = false,
+	hidePage2 = false,
+	hidePage3 = false,
+	hidePage4 = false,
+	hidePage5 = false,
+	hidePage6 = false,
 }
 
 --- Create a new action button.
@@ -106,10 +114,10 @@ local DefaultConfig = {
 -- @param header Header that drives these action buttons (if any)
 function lib:CreateButton(id, name, header, config, xml)
 	local templates = xml or 'SecureActionButtonTemplate, SecureHandlerEnterLeaveTemplate, CPUIActionButtonTemplate'
-	return self:InitButton(CreateFrame('CheckButton', name, header, templates), id, header)
+	return self:InitButton(CreateFrame('CheckButton', name, header, templates), id, header, config)
 end
 
-function lib:InitButton(button, id, header)
+function lib:InitButton(button, id, header, config)
 	button = setmetatable(button, Generic_MT)
 	button:RegisterForDrag('LeftButton', 'RightButton')
 
@@ -1024,7 +1032,9 @@ function Generic:UpdateFlyout()
 end
 
 function Update(self)
-	self:Hide()
+	if self.config.hideEmptyButtons then  -- Проверяем настройку перед вызовом self:Hide()
+        self:Hide()
+    end
 	if self:HasAction() then
 		ActiveButtons[self] = true
 
@@ -1070,7 +1080,11 @@ function Update(self)
 
 	-- Update Action Text
 	if self.isMainButton and not self:IsConsumableOrStackable() then
-		self.Name:SetText(self:GetActionText())
+		if not self.config.hideMacroName then
+			self.Name:SetText(self:GetActionText())
+		else
+			self.Name:SetText('')
+		end
 	else
 		self.Name:SetText('')
 	end
@@ -1181,8 +1195,25 @@ function UpdatePage(self)
 		local action = self:GetAttribute('action')
 		if (page and action) and (page > 1) and (page < 7) then
 			if action <= NUM_ACTIONBAR_BUTTONS then
-				--self.Page:Show()
-				--self.Page:SetText(page)
+				if not self.config.hidePageNumber then
+					self.Page:Show()
+					self.Page:SetText(page)
+				end
+				if (page == 2) and self.config.hidePage2 then
+					self:Hide()
+				end
+				if (page == 3) and self.config.hidePage3 then
+					self:Hide()
+				end
+				if (page == 4) and self.config.hidePage4 then
+					self:Hide()
+				end
+				if (page == 5) and self.config.hidePage5 then
+					self:Hide()
+				end
+				if (page == 6) and self.config.hidePage6 then
+					self:Hide()
+				end
 				return
 			end
 		end

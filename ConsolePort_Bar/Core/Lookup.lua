@@ -113,6 +113,14 @@ function env:GetPresets()
 			watchbars = true,
 			showline = true,
 			showbuttons = false,
+			hideemptybuttons = false,
+			hidepagenumber = false,
+			hidemacroname = false,
+			hidepage2 = false,
+			hidepage3 = false,
+			hidepage4 = false,
+			hidepage5 = false,
+			hidepage6 = false,
 			lock = true,
 			layout = self:GetOrthodoxButtonLayout(),
 		},
@@ -123,6 +131,14 @@ function env:GetPresets()
 			showline = true,
 			showart = true,
 			showbuttons = false,
+			hideemptybuttons = false,
+			hidepagenumber = false,
+			hidemacroname = false,
+			hidepage2 = false,
+			hidepage3 = false,
+			hidepage4 = false,
+			hidepage5 = false,
+			hidepage6 = false,
 			lock = true,
 			layout = self:GetDefaultButtonLayout(),
 		},
@@ -179,6 +195,14 @@ function env:GetDefaultSettings()
 		flashart = true,
 		eye = true,
 		showbuttons = false,
+		hideemptybuttons = false,
+		hidepagenumber = false,
+		hidemacroname = false,
+		hidepage2 = false,
+		hidepage3 = false,
+		hidepage4 = false,
+		hidepage5 = false,
+		hidepage6 = false,
 		layout = env:GetDefaultButtonLayout()
 	}
 end
@@ -225,6 +249,40 @@ function env:GetBooleanSettings() return {
 	{	name = 'Always show all buttons';
 		cvar = 'showbuttons';
 		desc = 'Shows the entire button cluster at all times, not just abilities on cooldown.';
+	};
+	---------------------------------------
+	{	name = 'Visibility Details' };
+	{	name = 'Hide empty buttons';
+		cvar = 'hideemptybuttons';
+		desc = 'Hides all action buttons without spell, macro or item. (Need reload UI for changing).';
+	};
+	{	name = 'Hide page number';
+		cvar = 'hidepagenumber';
+		desc = 'Hides number of page action bar. (Need reload UI for changing).';
+	};
+	{	name = 'Hide macro name';
+		cvar = 'hidemacroname';
+		desc = 'Hides name of macros in action bar. (Need reload UI for changing).';
+	};
+	{	name = 'Hide Page 2';
+		cvar = 'hidepage2';
+		desc = 'Hides page of action bar. (Need reload UI for changing).';
+	};
+	{	name = 'Hide Page 3';
+		cvar = 'hidepage3';
+		desc = 'Hides page of action bar. (Need reload UI for changing).';
+	};
+	{	name = 'Hide Page 4';
+		cvar = 'hidepage4';
+		desc = 'Hides page of action bar. (Need reload UI for changing).';
+	};
+	{	name = 'Hide Page 5';
+		cvar = 'hidepage5';
+		desc = 'Hides page of action bar. (Need reload UI for changing).';
+	};
+	{	name = 'Hide Page 6';
+		cvar = 'hidepage6';
+		desc = 'Hides page of action bar. (Need reload UI for changing).';
 	};
 	---------------------------------------
 	{	name = 'Pet Ring' };
