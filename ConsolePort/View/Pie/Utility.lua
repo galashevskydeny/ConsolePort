@@ -196,6 +196,7 @@ Utility:WrapScript(Utility.Remove, 'OnClick', [[
 -- Data handling
 ---------------------------------------------------------------
 function Utility:OnDataLoaded()
+	self:SetFrameStrata("DIALOG")
 	self:SetAttribute('size', 0)
 	self:CreateFramePool('SecureActionButtonTemplate, SecureHandlerEnterLeaveTemplate, CPUIActionButtonTemplate', Button)
 	db:Load('Utility/Data', 'ConsolePortUtility')
