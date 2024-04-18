@@ -1181,8 +1181,8 @@ function UpdatePage(self)
 		local action = self:GetAttribute('action')
 		if (page and action) and (page > 1) and (page < 7) then
 			if action <= NUM_ACTIONBAR_BUTTONS then
-				self.Page:Show()
-				self.Page:SetText(page)
+				--self.Page:Show()
+				--self.Page:SetText(page)
 				return
 			end
 		end
