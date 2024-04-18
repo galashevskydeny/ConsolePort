@@ -1024,11 +1024,14 @@ function Generic:UpdateFlyout()
 end
 
 function Update(self)
+	self:Hide()
 	if self:HasAction() then
 		ActiveButtons[self] = true
+
 		if self._state_type == 'action' then
 			ActionButtons[self] = true
 			NonActionButtons[self] = nil
+			self:Show()
 		else
 			ActionButtons[self] = nil
 			NonActionButtons[self] = true
@@ -1039,6 +1042,7 @@ function Update(self)
 		UpdateFlash(self)
 		UpdatePage(self)
 	else
+
 		ActiveButtons[self] = nil
 		ActionButtons[self] = nil
 		NonActionButtons[self] = nil
