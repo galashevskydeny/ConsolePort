@@ -11,6 +11,15 @@ local Utility = Mixin(CPAPI.EventHandler(ConsolePortUtilityToggle, {
 	CPAPI.IsRetailVersion and 'UPDATE_EXTRA_ACTIONBAR';
 }), CPAPI.AdvancedSecureMixin)
 local Button = CreateFromMixins(CPActionButton);
+
+-- Создание фрейма для полупрозрачного фона
+local background = CreateFrame("Frame", "ConsolePortUtilityBackground", UIParent, "BackdropTemplate")
+background:SetFrameStrata("HIGH")
+background:SetAllPoints(UIParent)
+background:SetBackdrop({bgFile = "Interface\\Buttons\\WHITE8X8"})
+background:SetBackdropColor(0, 0, 0, 0.5)
+background:Hide()  -- Скрываем фон, чтобы он не отображался постоянно
+
 ---------------------------------------------------------------
 local DEFAULT_SET, EXTRA_ACTION_ID = CPAPI.DefaultRingSetID, CPAPI.ExtraActionButtonID;
 ---------------------------------------------------------------
@@ -22,6 +31,36 @@ Utility:Execute(([[
 ---------------------------------------------------------------
 db:Register('Utility', Utility)
 db:Save('Utility/Data', 'ConsolePortUtility')
+---------------------------------------------------------------
+
+-- Предполагаем, что Utility - это фрейм
+-- Инициализируем переменную для хранения значения прозрачности
+local savedAlpha = 1
+local sacedEncounterBarAlpha = 1
+
+Utility:HookScript("OnShow", function(self)
+    
+    background:Show()
+
+    -- Сохраняем наибольшее текущее значение прозрачности двух фреймов
+    savedAlpha = PlayerFrame:GetAlpha()
+	sacedEncounterBarAlpha = EncounterBar:GetAlpha()
+
+    -- Устанавливаем прозрачность PlayerFrame и TargetFrame
+    PlayerFrame:SetAlpha(0)
+    TargetFrame:SetAlpha(0)
+	EncounterBar:SetAlpha(0)
+end)
+
+Utility:HookScript("OnHide", function(self)
+    background:Hide()
+
+    -- Возвращаем прозрачность PlayerFrame и TargetFrame к сохраненному значению
+    PlayerFrame:SetAlpha(savedAlpha)
+    TargetFrame:SetAlpha(savedAlpha)
+	EncounterBar:SetAlpha(sacedEncounterBarAlpha)
+end)
+
 
 ---------------------------------------------------------------
 -- Secure environment
