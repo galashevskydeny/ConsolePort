@@ -1033,7 +1033,7 @@ end
 
 function Update(self)
 	if self.config.hideEmptyButtons then  -- Проверяем настройку перед вызовом self:Hide()
-        self:Hide()
+        self:SetAlpha(0)
     end
 	if self:HasAction() then
 		ActiveButtons[self] = true
@@ -1041,7 +1041,7 @@ function Update(self)
 		if self._state_type == 'action' then
 			ActionButtons[self] = true
 			NonActionButtons[self] = nil
-			self:Show()
+			self:SetAlpha(1)
 		else
 			ActionButtons[self] = nil
 			NonActionButtons[self] = true
@@ -1200,19 +1200,19 @@ function UpdatePage(self)
 					self.Page:SetText(page)
 				end
 				if (page == 2) and self.config.hidePage2 then
-					self:Hide()
+					self:SetAlpha(0)
 				end
 				if (page == 3) and self.config.hidePage3 then
-					self:Hide()
+					self:SetAlpha(0)
 				end
 				if (page == 4) and self.config.hidePage4 then
-					self:Hide()
+					self:SetAlpha(0)
 				end
 				if (page == 5) and self.config.hidePage5 then
-					self:Hide()
+					self:SetAlpha(0)
 				end
 				if (page == 6) and self.config.hidePage6 then
-					self:Hide()
+					self:SetAlpha(0)
 				end
 				return
 			end

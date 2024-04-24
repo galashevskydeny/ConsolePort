@@ -501,7 +501,7 @@ function HANDLE:Create(parent, id)
 		cluster[mod] = button
 	end
 
-	db.Alpha.FadeIn(cluster[nomod], 1, 0, 1)
+	--db.Alpha.FadeIn(cluster[nomod], 1, 0, 1)
 
 	Registry[id] = cluster;
 	return cluster;
