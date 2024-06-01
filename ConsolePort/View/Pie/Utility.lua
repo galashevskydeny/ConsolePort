@@ -33,11 +33,6 @@ db:Register('Utility', Utility)
 db:Save('Utility/Data', 'ConsolePortUtility')
 ---------------------------------------------------------------
 
--- Предполагаем, что Utility - это фрейм
--- Инициализируем переменную для хранения значения прозрачности
-local savedAlpha = 1
-local sacedEncounterBarAlpha = 1
-
 Utility:HookScript("OnShow", function(self)
     
     background:Show()
@@ -46,19 +41,14 @@ Utility:HookScript("OnShow", function(self)
     savedAlpha = PlayerFrame:GetAlpha()
 	sacedEncounterBarAlpha = EncounterBar:GetAlpha()
 
-    -- Устанавливаем прозрачность PlayerFrame и TargetFrame
-    PlayerFrame:SetAlpha(0)
-    TargetFrame:SetAlpha(0)
-	EncounterBar:SetAlpha(0)
+	WeakAuras.ScanEvents("SHOW_UTILITY_RING")
+
 end)
 
 Utility:HookScript("OnHide", function(self)
     background:Hide()
 
-    -- Возвращаем прозрачность PlayerFrame и TargetFrame к сохраненному значению
-    PlayerFrame:SetAlpha(savedAlpha)
-    TargetFrame:SetAlpha(savedAlpha)
-	EncounterBar:SetAlpha(sacedEncounterBarAlpha)
+	WeakAuras.ScanEvents("HIDE_UTILITY_RING")
 end)
 
 
